@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral's World</title>
+    <link href="https://fonts.cdnfonts.com/css/minecraft" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Minecraft Regular', 'Minecraft', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+            text-align: center;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #9b4dca;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .content {
+            position: relative;
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(155, 77, 202, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            background-color: #1e1e1e;
+            border: 2px solid #9b4dca;
+            color: #9b4dca;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #9b4dca;
+            transition: width 0.3s ease;
+        }
+
+        .tab:hover::after {
+            width: 100%;
+        }
+
+        .tab.active {
+            background-color: #9b4dca;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tab-content.fade-out {
+            animation: slideOutLeft 0.5s forwards;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .skill-tag {
+            background-color: #9b4dca;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #9b4dca;
+        }
+
+        .server-feature {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .server-ip {
+            background-color: #2d2d2d;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        .discord-link {
+            color: #9b4dca;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .discord-link:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            p {
+                font-size: 0.7rem;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(155, 77, 202, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(155, 77, 202, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(155, 77, 202, 0.2); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .content {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .skill-tag {
+            animation: pulse 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #b366d9;
+        }
+
+        .server-feature {
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .server-ip {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .server-ip:hover {
+            transform: scale(1.05);
+            background-color: #3d3d3d;
+        }
+
+        .server-ip::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(155, 77, 202, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .discord-link {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .discord-link:hover {
+            transform: scale(1.1) rotate(-2deg);
+            text-shadow: 0 0 10px rgba(155, 77, 202, 0.5);
+        }
+
+        /* Animate server features with delay */
+        .server-feature:nth-child(1) { animation-delay: 0.1s; }
+        .server-feature:nth-child(2) { animation-delay: 0.2s; }
+        .server-feature:nth-child(3) { animation-delay: 0.3s; }
+        .server-feature:nth-child(4) { animation-delay: 0.4s; }
+        .server-feature:nth-child(5) { animation-delay: 0.5s; }
+        .server-feature:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Add loading animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #1e1e1e;
+            border-top: 5px solid #9b4dca;
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+        }
+
+        /* Add hover effect for tabs */
+        .tabs {
+            perspective: 1000px;
+        }
+
+        .tab {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .tab:hover {
+            transform: rotateX(10deg) scale(1.1);
+        }
+
+        .tab.active {
+            animation: pulse 2s infinite;
+        }
+
+        .waked-section {
+            margin: 1.5rem 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .waked-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .stat-box {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 150px;
+            animation: pulse 2s infinite;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            color: #9b4dca;
+            margin-bottom: 0.5rem;
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .link-button {
+            background: #9b4dca;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 77, 202, 0.3);
+        }
+
+        .feature-list {
+            text-align: left;
+            margin: 1rem 0;
+        }
+
+        .feature-item {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-icon {
+            color: #9b4dca;
+            font-size: 1.2rem;
+        }
+
+        /* Custom Scrollbar for Webkit browsers (Chrome, Safari, newer Edge) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #9b4dca;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b366d9;
+        }
+
+        /* Custom Scrollbar for Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #9b4dca #1e1e1e;
+        }
+
+        /* Ensure content is scrollable but container is fixed */
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Add smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Smooth hover effect */
+        .content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(155, 77, 202, 0.3);
+        }
+
+        /* Tab hover effect */
+        .tab {
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: rgba(155, 77, 202, 0.1);
+        }
+
+        .tab.active {
+            background-color: #9b4dca;
+            color: white;
+        }
+
+        /* Styles for separate boxes */
+        .info-box {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(155, 77, 202, 0.1);
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(155, 77, 202, 0.2);
+        }
+
+        .info-box h3 {
+            color: #9b4dca;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-box {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-3px);
+            background: #333333;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-item {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            background: #333333;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .link-button {
+            background: #9b4dca;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            background: #b366d9;
+            box-shadow: 0 5px 15px rgba(155, 77, 202, 0.3);
+        }
+
+        /* Staff Team Styles */
+        .staff-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .staff-position {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .staff-position:hover {
+            transform: translateY(-3px);
+            background: #333333;
+            box-shadow: 0 5px 15px rgba(155, 77, 202, 0.2);
+        }
+
+        .position-title {
+            color: #9b4dca;
+            font-weight: bold;
+            min-width: 140px;
+        }
+
+        .staff-name {
+            color: #ffffff;
+        }
+
+        .staff-icon {
+            font-size: 1.2rem;
+            min-width: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .staff-position {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .position-title {
+                min-width: unset;
+            }
+        }
+
+        /* Beta Badge Style */
+        .beta-badge {
+            background: #9b4dca;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Feature Items for TheBoxSRV */
+        #thebox .feature-item {
+            background: linear-gradient(145deg, #2d2d2d, #333333);
+            border: 1px solid rgba(155, 77, 202, 0.1);
+        }
+
+        #thebox .feature-item:hover {
+            border-color: rgba(155, 77, 202, 0.3);
+            background: linear-gradient(145deg, #333333, #2d2d2d);
+        }
+
+        /* Stat Box Enhancement */
+        #thebox .stat-box {
+            border: 1px solid rgba(155, 77, 202, 0.1);
+        }
+
+        #thebox .stat-box:hover {
+            border-color: rgba(155, 77, 202, 0.3);
+        }
+
+        /* Simplified styles for TheBoxSRV staff section */
+        #thebox .staff-position {
+            background: linear-gradient(145deg, #2d2d2d, #333333);
+            border: 1px solid rgba(155, 77, 202, 0.1);
+        }
+
+        #thebox .staff-position:hover {
+            border-color: rgba(155, 77, 202, 0.3);
+            background: linear-gradient(145deg, #333333, #2d2d2d);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 77, 202, 0.2);
+        }
+
+        #thebox .staff-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Styles for TheBoxSRV Discord button */
+        #thebox .discord-button {
+            background: #5865F2;
+            transition: all 0.3s ease;
+        }
+
+        #thebox .discord-button:hover {
+            background: #4752C4;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+        }
+
+        /* Update animation timing for TheBoxSRV */
+        #thebox .tab-content {
+            transition: all 0.2s ease;
+        }
+
+        #thebox.active {
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        /* Update the fade animations for TheBoxSRV */
+        #thebox .fade-enter {
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        #thebox .fade-exit {
+            animation: fadeOut 0.2s ease forwards;
+        }
+
+        /* Make feature animations faster */
+        #thebox .feature-item,
+        #thebox .stat-box,
+        #thebox .info-box,
+        #thebox .staff-position {
+            animation: slideUp 0.2s ease forwards;
+        }
+
+        /* Update the sequential animations timing */
+        @keyframes quickSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Astral</h1>
+        <div class="tabs">
+            <div class="tab active" data-tab="about">About Me</div>
+            <div class="tab" data-tab="waked">WakedSMP</div>
+            <div class="tab" data-tab="thebox">TheBoxSRV</div>
+        </div>
+        <div class="content">
+            <div class="tab-content active" id="about">
+                <div class="skills">
+                    <div class="skill-tag">Minecraft Expert</div>
+                    <div class="skill-tag">Server Management</div>
+                    <div class="skill-tag">Community Building</div>
+                    <div class="skill-tag">Moderator</div>
+                </div>
+                <p>Hey there! I'm <span class="highlight">Astral</span>, but you can call me <span class="highlight">Jessica</span>.</p>
+                <p>I'm a passionate <span class="highlight">Minecraft</span> player with 9 years of experience in the game. It's simply the best game out there!</p>
+                <p>For almost <span class="highlight">6 years</span>, I've been managing Minecraft servers, building up valuable experience in server administration and community management.</p>
+                <p>Currently, I'm a <span class="highlight">17-year-old</span> teenager with big dreams. My ultimate goal? To make my mark on Minehut with all the experience I've gathered!</p>
+            </div>
+            <div class="tab-content" id="waked">
+                <!-- Welcome Box -->
+                <div class="info-box">
+                    <h3>🔥 Welcome to WakedSMP!</h3>
+                    <p>Experience Minecraft like never before on our unique survival server!</p>
+                </div>
+
+                <!-- Stats Box -->
+                <div class="info-box">
+                    <h3>📊 Server Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number">500+</div>
+                            <div>Active Players</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">24/7</div>
+                            <div>Uptime</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">100+</div>
+                            <div>Custom Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Box -->
+                <div class="info-box">
+                    <h3>✨ Key Features</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">💗</span>
+                            <span>Lifesteal Mechanics</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💰</span>
+                            <span>Player-Driven Economy</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎮</span>
+                            <span>Daily Events</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⚔️</span>
+                            <span>Custom PvP Areas</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎁</span>
+                            <span>Daily Rewards</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🏆</span>
+                            <span>Kill Counter</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connection Box -->
+                <div class="info-box">
+                    <h3>🌐 Server Information</h3>
+                    <div class="server-ip">IP: wakedsmp.com</div>
+                    <p>Version: 1.20.1</p>
+                    <p>Location: North America</p>
+                    <p>Status: Online 24/7</p>
+                </div>
+
+                <!-- Staff Team Box -->
+                <div class="info-box">
+                    <h3>👥 Staff Team</h3>
+                    <div class="staff-grid">
+                        <div class="staff-position">
+                            <span class="staff-icon">👑</span>
+                            <span class="position-title">Owner</span>
+                            <span class="staff-name">IQsm</span>
+                        </div>
+                        <div class="staff-position">
+                            <span class="staff-icon">⭐</span>
+                            <span class="position-title">Co-Owner</span>
+                            <span class="staff-name">Limelio</span>
+                        </div>
+                        <div class="staff-position">
+                            <span class="staff-icon">🔰</span>
+                            <span class="position-title">Manager</span>
+                            <span class="staff-name">Voxilityyy</span>
+                        </div>
+                        <div class="staff-position">
+                            <span class="staff-icon">🛡️</span>
+                            <span class="position-title">Marketing Manager & Moderator</span>
+                            <span class="staff-name">ItsMeAstral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links Box -->
+                <div class="info-box">
+                    <h3>🔗 Quick Links</h3>
+                    <div class="links-grid">
+                        <a href="https://discord.gg/waked" class="link-button" target="_blank">
+                            <span>🎮</span>
+                            <span>Discord</span>
+                        </a>
+                        <a href="https://store.wakedsmp.com" class="link-button" target="_blank">
+                            <span>🛍️</span>
+                            <span>Store</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="thebox">
+                <!-- Welcome Box -->
+                <div class="info-box">
+                    <h3>📦 Welcome to TheBoxSRV!</h3>
+                    <p>Experience an immersive box mining adventure!</p>
+                    <div class="beta-badge">
+                        BETA TESTING
+                    </div>
+                </div>
+
+                <!-- Features Box -->
+                <div class="info-box">
+                    <h3>✨ Server Features</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">⛏️</span>
+                            <span>Immersive Box Mining</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🌟</span>
+                            <span>Grindable Ranks</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💎</span>
+                            <span>Buyable Ranks</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">👥</span>
+                            <span>Interactive Community</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Server Status Box -->
+                <div class="info-box">
+                    <h3>🌐 Server Status</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number">24/7</div>
+                            <div>Online</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">BETA</div>
+                            <div>Testing Phase</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Team Box -->
+                <div class="info-box">
+                    <h3>👥 Staff Team</h3>
+                    <div class="staff-grid">
+                        <div class="staff-position">
+                            <span class="staff-icon">👑</span>
+                            <span class="position-title">Owner</span>
+                            <span class="staff-name">Jugular</span>
+                        </div>
+                        <div class="staff-position">
+                            <span class="staff-icon">👑</span>
+                            <span class="position-title">Owner</span>
+                            <span class="staff-name">Kinan</span>
+                        </div>
+                        <div class="staff-position">
+                            <span class="staff-icon">🔰</span>
+                            <span class="position-title">Manager</span>
+                            <span class="staff-name">Itsmeastral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add this inside TheBoxSRV section (id="thebox"), after the staff team box -->
+                <div class="info-box">
+                    <h3>🔗 Join Our Community</h3>
+                    <div class="links-grid">
+                        <a href="https://discord.gg/fvWRWYev" class="link-button discord-button" target="_blank">
+                            <span>🎮</span>
+                            <span>Join Discord</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    const newContent = document.getElementById(tab.dataset.tab);
+                    newContent.classList.add('active');
+                    
+                    // Faster animations for TheBoxSRV
+                    if (tab.dataset.tab === 'thebox') {
+                        document.querySelectorAll('#thebox .feature-item, #thebox .stat-box, #thebox .staff-position').forEach((element, index) => {
+                            element.style.opacity = '0';
+                            element.style.animation = 'none';
+                            setTimeout(() => {
+                                element.style.animation = `quickSlideUp 0.2s ease forwards ${index * 0.05}s`;
+                            }, 5);
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add loading screen handler
+        window.addEventListener('load', function() {
+            const loader = document.querySelector('.loading-overlay');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Add hover animation for skill tags
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('mouseover', function() {
+                this.style.transform = `scale(1.1) rotate(${Math.random() * 10 - 5}deg)`;
+            });
+            
+            tag.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Animate stats on tab change
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                if(tab.dataset.tab === 'waked') {
+                    document.querySelectorAll('.waked-section').forEach((section, index) => {
+                        section.style.opacity = '0';
+                        section.style.animation = 'none';
+                        setTimeout(() => {
+                            section.style.animation = `slideUp 0.5s ease forwards ${index * 0.1}s`;
+                        }, 10);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
