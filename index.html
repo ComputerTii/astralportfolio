@@ -16,7 +16,7 @@
         body {
             background-color: #121212;
             color: #ffffff;
-            font-family: 'Minecraft Regular', 'Minecraft', sans-serif;
+            font-family: 'Minecraft', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
@@ -742,6 +742,80 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Add the Minecraft font using @font-face */
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.eot');
+            src: url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.eot?#iefix') format('embedded-opentype'),
+                url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.woff2') format('woff2'),
+                url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.woff') format('woff'),
+                url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.ttf') format('truetype'),
+                url('https://db.onlinewebfonts.com/t/6ab539c6fc2b21ff0b149b3d06d7f97c.svg#Minecraft') format('svg');
+        }
+
+        /* Update the body font-family */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Minecraft', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for Firefox */
+        * {
+            scrollbar-width: none;
+        }
+
+        /* Hide scrollbar for IE and Edge */
+        body {
+            -ms-overflow-style: none;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Minecraft', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .content {
+            position: relative;
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(155, 77, 202, 0.2);
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            max-width: 600px;
+            overflow: visible;
+        }
+
+        .tab-content {
+            position: relative;
+            width: 100%;
+            overflow: visible;
         }
     </style>
 </head>
